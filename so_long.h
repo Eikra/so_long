@@ -36,6 +36,8 @@ typedef struct gamme_elmnt
 	void	*id;
 	void	*w_id;
 	void	*img;
+	int mov_cnt;
+	int clc_cnt;
 }			map_elmnt;
 
 /* Struct to handle all possible layout errors */
@@ -96,10 +98,10 @@ int	deal_key(int key, map_elmnt *elmnt);
 void game_init(map_elmnt elmnt);
 void    ft_display(char **map,map_elmnt *elmnt);
 void	ft_display_item(char *path,int i,int j,map_elmnt *elmnt);
-int ft_move_up(position p, map_elmnt *m, int check, int *c,int count);
-int ft_move_right(position p, map_elmnt *m, int check, int *c,int count);
-int ft_move_left(position p, map_elmnt *m, int check, int *c,int count);
-int ft_move_down(position p, map_elmnt *m, int check, int *c,int count);
+int ft_move_up(position p, map_elmnt *m);
+int ft_move_right(position p, map_elmnt *m);
+int ft_move_left(position p, map_elmnt *m);
+int ft_move_down(position p, map_elmnt *m);
 
 
 int	ft_printf(const char *s, ...);

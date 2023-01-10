@@ -54,10 +54,7 @@ void    ft_display(char **map,map_elmnt *elmnt)
 int	deal_key(int key, map_elmnt *elmnt)
 {
     position    p;
-    static int  count;
-    static int  check;
-    static int     c;
-
+    
     p = ft_get_position(elmnt->map);
     if(key == ESC)
     {
@@ -65,18 +62,22 @@ int	deal_key(int key, map_elmnt *elmnt)
         mlx_destroy_window(elmnt->id, elmnt->w_id);
         exit(0);
     }
-    if (c == elmnt->collct)
-		check = 1;
-    if(key== UP || key== 13)
-        count+= ft_move_up(p,elmnt,check,&c, count);
-    if(key== RIGHT|| key== 2)
-        count+= ft_move_right(p,elmnt,check,&c, count);
-    if(key== LEFT || key==0)
-        count+= ft_move_left(p,elmnt,check,&c, count);
-    if(key== DOWN || key==1)
-        count+= ft_move_down(p,elmnt,check,&c, count);
     
+    if(key== UP || key== 13)
+        ft_move_up(p,elmnt);
+    if(key== RIGHT|| key== 2)
+        ft_move_right(p,elmnt);
+    if(key== LEFT || key==0)
+        ft_move_left(p,elmnt);
+    if(key== DOWN || key==1)
+        ft_move_down(p,elmnt);
+    //printf("%d\n", elmnt->clc_cnt);
     return(0);
+}
+int	ft_exit(void)
+{
+	ft_printf("Exit the program with the X !!");
+	exit (0);
 }
 void game_init(map_elmnt elmnt)
 {
@@ -84,7 +85,7 @@ void game_init(map_elmnt elmnt)
    elmnt.w_id= mlx_new_window (elmnt.id, 60 * elmnt.col, 60 * elmnt.row, "so_long");
    ft_display(elmnt.map,&elmnt);
    mlx_hook(elmnt.w_id, 2, 0, deal_key, &elmnt);
-//    mlx_hook(elmnt.w_id, 17, 0, closed, &elmnt);
+   mlx_hook(elmnt.w_id, 17, 0, ft_exit, &elmnt);
 // 	mlx_loop_hook(elmnt.id, animate, &elmnt);
     mlx_loop(elmnt.id);
 }

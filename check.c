@@ -144,6 +144,8 @@ map_elmnt	ft_init_elmnt(void)
 	elmnt.ply = 0;
 	elmnt.exit = 0;
 	elmnt.collct = 0;
+	elmnt.mov_cnt=0;
+	elmnt.clc_cnt=0;
 	return (elmnt);
 }
 char	*ft_read_map(int fd, map_err *errs, map_elmnt *elmnt)
