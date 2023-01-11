@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 21:12:46 by iecharak          #+#    #+#             */
-/*   Updated: 2023/01/01 17:09:49 by iecharak         ###   ########.fr       */
+/*   Created: 2023/01/11 20:57:02 by iecharak          #+#    #+#             */
+/*   Updated: 2023/01/11 22:31:46 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "so_long.h"
 
 char	*get_next_line(int fd)
 {

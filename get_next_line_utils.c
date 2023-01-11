@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 17:12:36 by iecharak          #+#    #+#             */
-/*   Updated: 2023/01/01 17:12:27 by iecharak         ###   ########.fr       */
+/*   Created: 2023/01/11 20:57:45 by iecharak          #+#    #+#             */
+/*   Updated: 2023/01/11 22:33:11 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "so_long.h"
 
 size_t	ftg_strlen(const char *s)
 {
