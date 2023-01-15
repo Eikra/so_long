@@ -6,23 +6,23 @@
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:59:51 by iecharak          #+#    #+#             */
-/*   Updated: 2023/01/11 23:10:32 by iecharak         ###   ########.fr       */
+/*   Updated: 2023/01/15 02:17:33 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_move_up(position p, map_elmnt *m)
+int	ft_move_up(t_p p, t_d *m)
 {
-	if (m->map[p.x - 1][p.y] == 'E' && m->clc_cnt == m->collct)
+	if (m->path[p.x - 1][p.y] == 'E' && m->clc_cnt == m->collectible)
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		ft_printf("CONGRATULATIONS, You won !!");
-		free(m->map);
+		free(m->path);
 		exit(0);
 		return (0);
 	}
-	else if (m->map[p.x - 1][p.y] == 'C')
+	else if (m->path[p.x - 1][p.y] == 'C')
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		player_up(p, m);
@@ -30,7 +30,7 @@ int	ft_move_up(position p, map_elmnt *m)
 		m->clc_cnt++;
 		return (1);
 	}
-	else if (m->map[p.x - 1][p.y] == '0')
+	else if (m->path[p.x - 1][p.y] == '0')
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		player_up(p, m);
@@ -40,17 +40,17 @@ int	ft_move_up(position p, map_elmnt *m)
 	return (0);
 }
 
-int	ft_move_right(position p, map_elmnt *m)
+int	ft_move_right(t_p p, t_d *m)
 {
-	if (m->map[p.x][p.y + 1] == 'E' && m->clc_cnt == m->collct)
+	if (m->path[p.x][p.y + 1] == 'E' && m->clc_cnt == m->collectible)
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		ft_printf("CONGRATULATIONS, You won !!");
-		free(m->map);
+		free(m->path);
 		exit(0);
 		return (0);
 	}
-	if (m->map[p.x][p.y + 1] == 'C')
+	if (m->path[p.x][p.y + 1] == 'C')
 	{
 		m->clc_cnt++;
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
@@ -58,7 +58,7 @@ int	ft_move_right(position p, map_elmnt *m)
 		m->mov_cnt++;
 		return (1);
 	}
-	if (m->map[p.x][p.y + 1] == '0')
+	if (m->path[p.x][p.y + 1] == '0')
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		player_right(p, m);
@@ -68,9 +68,9 @@ int	ft_move_right(position p, map_elmnt *m)
 	return (0);
 }
 
-int	ft_move_left(position p, map_elmnt *m)
+int	ft_move_left(t_p p, t_d *m)
 {
-	if (m->map[p.x][p.y - 1] == 'E' && m->clc_cnt == m->collct)
+	if (m->path[p.x][p.y - 1] == 'E' && m->clc_cnt == m->collectible)
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		ft_printf("CONGRATULATIONS, You won !!");
@@ -78,7 +78,7 @@ int	ft_move_left(position p, map_elmnt *m)
 		exit(0);
 		return (0);
 	}
-	if (m->map[p.x][p.y - 1] == 'C')
+	if (m->path[p.x][p.y - 1] == 'C')
 	{
 		m->clc_cnt++;
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
@@ -86,7 +86,7 @@ int	ft_move_left(position p, map_elmnt *m)
 		m->mov_cnt++;
 		return (1);
 	}
-	if (m->map[p.x][p.y - 1] == '0')
+	if (m->path[p.x][p.y - 1] == '0')
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		player_left(p, m);
@@ -96,9 +96,9 @@ int	ft_move_left(position p, map_elmnt *m)
 	return (0);
 }
 
-int	ft_move_down(position p, map_elmnt *m)
+int	ft_move_down(t_p p, t_d *m)
 {
-	if (m->map[p.x + 1][p.y] == 'E' && m->clc_cnt == m->collct)
+	if (m->path[p.x + 1][p.y] == 'E' && m->clc_cnt == m->collectible)
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		ft_printf("CONGRATULATIONS, You won !!");
@@ -106,7 +106,7 @@ int	ft_move_down(position p, map_elmnt *m)
 		exit(0);
 		return (0);
 	}
-	if (m->map[p.x + 1][p.y] == 'C')
+	if (m->path[p.x + 1][p.y] == 'C')
 	{
 		m->clc_cnt++;
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
@@ -114,7 +114,7 @@ int	ft_move_down(position p, map_elmnt *m)
 		m->mov_cnt++;
 		return (1);
 	}
-	if (m->map[p.x + 1][p.y] == '0')
+	if (m->path[p.x + 1][p.y] == '0')
 	{
 		ft_printf("Move nomber : %d\n", m->mov_cnt + 1);
 		player_down(p, m);

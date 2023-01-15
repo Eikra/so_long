@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRC=  ft_printf.c get_next_line.c moves.c check.c ft_split.c get_next_line_utils.c print_errs.c check_utils.c game_display.c so_long.c player_move.c
+SRC=  ft_printf.c get_next_line.c moves.c ft_check.c ft_split.c get_next_line_utils.c so_long_utils.c game_display.c so_long.c player_move.c ft_strcat.c
 
 OBJ= $(SRC:.c=.o)
 

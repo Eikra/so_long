@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 20:14:25 by iecharak          #+#    #+#             */
-/*   Updated: 2023/01/11 23:05:06 by iecharak         ###   ########.fr       */
+/*   Created: 2023/01/14 21:38:08 by iecharak          #+#    #+#             */
+/*   Updated: 2023/01/15 14:17:22 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,79 +27,32 @@
 # define UP 126
 # define DOWN 125
 
-typedef struct gamme_elmnt
+typedef struct data
 {
+	int		length;
 	int		row;
-	int		col;
-	int		ply;
+	int		collectible;
 	int		exit;
-	int		collct;
-	char	**map;
+	int		player;
+	int		reached_e;
+	int		reached_c;
+	int		borders;
+	char	*map;
 	char	**path;
+	char	**str;
 	void	*id;
 	void	*w_id;
 	void	*img;
 	int		mov_cnt;
 	int		clc_cnt;
-}				map_elmnt;
+}			t_d;
 
-typedef struct elmnt_err
-{
-	int		inv_rowlen;
-	int		inv_char;
-	int		inv_n_ply;
-	int		inv_n_collct;
-	int		inv_n_exits;
-	int		inv_borders;
-}				map_err;
-
-typedef struct path
+typedef struct position
 {
 	int		x;
 	int		y;
-	int		ex;
-	int		clctbls;
-	int		c_er;
-}				path_err;
+}			t_p;
 
-typedef struct player
-{
-	int		x;
-	int		y;
-}				position;
-
-int			check_args(int ac, char *av);
-int			ft_error(char *err, char **path);
-int			ft_strrncmp(char *s, char *r, int n);
-int			ft_strlen(char *s);
-void		check_map(int fd, map_elmnt *elmnt);
-map_err		ft_init_errs(void);
-map_elmnt	ft_init_elmnt(void);
-path_err	ft_init_path_errs(void);
-char		*ft_read_map(int fd, map_err *errs, map_elmnt *elmnt);
-void		ft_check_elmnt(char *line, map_err *errs, map_elmnt *elmnt,
-				int last_r);
-void		check_path(int x, int y, path_err *e, char **path);
-void		print_path_errs(map_elmnt *m, path_err e);
-position	ft_get_position(char **path);
-char		*ft_strcat(char *s1, char *s2, int i, int j);
-int			ft_strchr(const char *str, char c);
-int			ft_countchar(const char *str, char c);
-char		**ft_split(char *s, char c);
-int			count_word(char *s, int c);
-char		*word_split(char *s, int start, int end);
-char		**ft_free(char **s, int i);
-char		**ft_spliter(char **tab, char *s, char c);
-char		*get_next_line(int fd);
-void		ft_print_errs(map_err errs, map_elmnt *m);
-int			deal_key(int key, map_elmnt *elmnt);
-void		game_init(map_elmnt elmnt);
-void		ft_display(char **map, map_elmnt *elmnt);
-void		ft_display_item(char *path, int i, int j, map_elmnt *elmnt);
-int			ft_move_up(position p, map_elmnt *m);
-int			ft_move_right(position p, map_elmnt *m);
-int			ft_move_left(position p, map_elmnt *m);
-int			ft_move_down(position p, map_elmnt *m);
 int			ft_printf(const char *s, ...);
 int			ft_putchar_l(char c);
 int			ft_putnbr_l(int n);
@@ -109,12 +62,45 @@ char		*ft_read_add_to_str(char *str, int fd);
 char		*add_to_str(char *str, char *buffer, int readed);
 char		*ft_str_to_line(char *str);
 char		*ft_clean_str(char *str);
-size_t		ftg_strlen(const char *s);
 char		*ftg_strchr(const char *s, int c);
+size_t		ftg_strlen(const char *s);
 char		*ft_memcpy(char *dst, char *src, int index);
-void		player_down(position p, map_elmnt *m);
-void		player_left(position p, map_elmnt *m);
-void		player_right(position p, map_elmnt *m);
-void		player_up(position p, map_elmnt *m);
+t_p			ft_get_position(char **path);
+char		*ft_strcat(char *s1, char *s2, int i, int j);
+int			ft_strchr(const char *str, char c);
+int			ft_countchar(const char *str, char c);
+char		**ft_split(char *s, char c);
+int			count_word(char *s, int c);
+char		*word_split(char *s, int start, int end);
+char		**ft_free(char **s, int i);
+char		**ft_spliter(char **tab, char *s, char c);
+char		*get_next_line(int fd);
+int			check_args(int ac, char *av);
+int			ft_error(char *err, char **path);
+void		ft_read_map(int fd, t_d *d);
+int			ft_strlen(char *s);
+void		game_init(t_d d);
+void		ft_check_map(t_d *d);
+void		ft_count_element(t_d *d);
+int			ft_strchr(const char *str, char c);
+int			ft_strrncmp(char *s, char *r, int n);
+int			ft_countchar(const char *str, char c);
+int			ft_exit(void);
+int			deal_key(int key, t_d *elmnt);
+void		ft_display(char **map, t_d *elmnt);
+void		ft_display_item(char *path, int i, int j, t_d *elmnt);
+int			ft_move_up(t_p p, t_d *m);
+int			ft_move_right(t_p p, t_d *m);
+int			ft_move_left(t_p p, t_d *m);
+int			ft_move_down(t_p p, t_d *m);
+void		player_up(t_p p, t_d *m);
+void		player_right(t_p p, t_d *m);
+void		player_left(t_p p, t_d *m);
+void		player_down(t_p p, t_d *m);
+void		ft_check_inv_char(t_d *d);
+void		check_path(int x, int y, t_d *e, char **path);
+void		check_borders(t_d *d);
+void		check_length(t_d *d);
+void		ft_init_t_d(t_d *d);
 
 #endif

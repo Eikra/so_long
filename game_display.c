@@ -5,25 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 19:56:26 by iecharak          #+#    #+#             */
-/*   Updated: 2023/01/11 19:59:19 by iecharak         ###   ########.fr       */
+/*   Created: 2023/01/15 01:25:46 by iecharak          #+#    #+#             */
+/*   Updated: 2023/01/15 14:36:36 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_display_item(char *path, int i, int j, map_elmnt *elmnt)
+void	ft_display_item(char *path, int i, int j, t_d *elmnt)
 {
 	int	w;
 	int	h;
 
 	elmnt->img = mlx_xpm_file_to_image(elmnt->id, path, &w, &h);
 	if (!elmnt->img)
-		ft_error("Error : corrupted xpm", elmnt->map);
+		ft_error("Error : corrupted xpm", elmnt->path);
 	mlx_put_image_to_window(elmnt->id, elmnt->w_id, elmnt->img, 60 * j, 60 * i);
 }
 
-void	ft_display(char **map, map_elmnt *elmnt)
+void	ft_display(char **map, t_d*elmnt)
 {
 	int	i;
 	int	j;
@@ -50,11 +50,11 @@ void	ft_display(char **map, map_elmnt *elmnt)
 	}
 }
 
-int	deal_key(int key, map_elmnt *elmnt)
+int	deal_key(int key, t_d *elmnt)
 {
-	position	p;
+	t_p	p;
 
-	p = ft_get_position(elmnt->map);
+	p = ft_get_position(elmnt->path);
 	if (key == ESC)
 	{
 		ft_printf("You closed the game using ESC key !");
@@ -78,13 +78,12 @@ int	ft_exit(void)
 	exit(0);
 }
 
-void	game_init(map_elmnt elmnt)
+void	game_init(t_d d)
 {
-	elmnt.id = mlx_init();
-	elmnt.w_id = mlx_new_window(elmnt.id, 60 * elmnt.col, 60 * elmnt.row,
-			"so_long");
-	ft_display(elmnt.map, &elmnt);
-	mlx_hook(elmnt.w_id, 2, 0, deal_key, &elmnt);
-	mlx_hook(elmnt.w_id, 17, 0, ft_exit, &elmnt);
-	mlx_loop(elmnt.id);
+	d.id = mlx_init();
+	d.w_id = mlx_new_window(d.id, 60 * d.length, 60 * d.row, "so_long");
+	ft_display(d.path, &d);
+	mlx_hook(d.w_id, 2, 0, deal_key, &d);
+	mlx_hook(d.w_id, 17, 0, ft_exit, &d);
+	mlx_loop(d.id);
 }

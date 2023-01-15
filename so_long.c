@@ -5,65 +5,42 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 17:01:05 by iecharak          #+#    #+#             */
-/*   Updated: 2023/01/11 20:28:43 by iecharak         ###   ########.fr       */
+/*   Created: 2023/01/14 22:15:16 by iecharak          #+#    #+#             */
+/*   Updated: 2023/01/15 14:37:06 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-position	ft_get_position(char **path)
-{
-	position	p;
-
-	p.x = 0;
-	p.y = 0;
-	while (path[p.x])
-	{
-		p.y = 0;
-		while (path[p.x][p.y])
-		{
-			if (path[p.x][p.y] == 'P')
-				return (p);
-			p.y++;
-		}
-		p.x++;
-	}
-	return (p);
-}
-
-void	check_map(int fd, map_elmnt *elmnt)
-{
-	char		*map;
-	map_err		errs;
-	path_err	p_errs;
-	position	p;
-
-	map = NULL;
-	errs = ft_init_errs();
-	*elmnt = ft_init_elmnt();
-	p_errs = ft_init_path_errs();
-	map = ft_read_map(fd, &errs, elmnt);
-	ft_print_errs(errs, elmnt);
-	elmnt->map = ft_split(map, '\n');
-	elmnt->path = ft_split(map, '\n');
-	p = ft_get_position(elmnt->path);
-	check_path(p.x, p.y, &p_errs, elmnt->path);
-	ft_free(elmnt->path, elmnt->row);
-	print_path_errs(elmnt, p_errs);
-}
-
-int	ft_error(char *err, char **path)
+void	ft_check_inv_char(t_d *d)
 {
 	int	i;
 
 	i = 0;
-	if (path)
-		free(path);
-	ft_printf("\033[0;91mError :\n\033[0;39m");
-	ft_printf("    %s\n", err);
-	exit(0);
-	return (0);
+	while (d->map[i])
+	{
+		if (!ft_strchr("01CEP\n", d->map[i]))
+			ft_error("Invalid character !!", NULL);
+		i++;
+	}
+}
+
+void	ft_check_map(t_d *d)
+{
+	t_p	p;
+
+	d->path = ft_split(d->map, '\n');
+	d->str = ft_split(d->map, '\n');
+	ft_check_inv_char(d);
+	ft_count_element(d);
+	check_length(d);
+	check_borders(d);
+	p = ft_get_position(d->path);
+	check_path(p.x, p.y, d, d->str);
+	if (!d->reached_e)
+		ft_error("Invalid path to the door !!", d->path);
+	if (d->reached_c != d->collectible)
+		ft_error("Invalid path to collectible !!", d->path);
 }
 
 int	check_args(int ac, char *av)
@@ -80,13 +57,34 @@ int	check_args(int ac, char *av)
 	return (fd);
 }
 
+void	ft_read_map(int fd, t_d *d)
+{
+	char	*line;
+
+	line = NULL;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+		{
+			if (!d->row)
+				ft_error("Map is empty!", NULL);
+			break ;
+		}
+		d->map = ft_strcat(d->map, line, 0, 0);
+		d->row++;
+	}
+}
+
 int	main(int ac, char **av)
 {
-	int			fd;
-	map_elmnt	elmnt;
+	int	fd;
+	t_d	d;
 
 	fd = check_args(ac, av[1]);
-	check_map(fd, &elmnt);
-	game_init(elmnt);
+	ft_init_t_d(&d);
+	ft_read_map(fd, &d);
+	ft_check_map(&d);
+	game_init(d);
 	return (0);
 }

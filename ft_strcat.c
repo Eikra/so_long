@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_errs.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iecharak <iecharak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 18:04:15 by iecharak          #+#    #+#             */
-/*   Updated: 2023/01/11 19:48:16 by iecharak         ###   ########.fr       */
+/*   Created: 2023/01/14 22:14:54 by iecharak          #+#    #+#             */
+/*   Updated: 2023/01/15 14:39:10 by iecharak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-path_err	ft_init_path_errs(void)
+int	ft_error(char *err, char **path)
 {
-	path_err	errs;
+	int	i;
 
-	errs.x = 0;
-	errs.y = 0;
-	errs.ex = 0;
-	errs.clctbls = 0;
-	errs.c_er = 0;
-	return (errs);
-}
-
-map_err	ft_init_errs(void)
-{
-	map_err	errs;
-
-	errs.inv_rowlen = 0;
-	errs.inv_char = 0;
-	errs.inv_n_ply = 0;
-	errs.inv_n_collct = 0;
-	errs.inv_n_exits = 0;
-	errs.inv_borders = 0;
-	return (errs);
+	i = 0;
+	if (path)
+		free(path);
+	ft_printf("\033[0;91mError :\n\033[0;39m");
+	ft_printf("    %s\n", err);
+	exit(0);
+	return (0);
 }
 
 char	*ft_strcat(char *s1, char *s2, int i, int j)
